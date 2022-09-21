@@ -7,17 +7,14 @@ use App\Http\Requests\StoreProductImageRequest;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ProductAdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $products = Product::query()
             ->select('id', 'name','price','rating','description')
@@ -35,7 +32,7 @@ class ProductAdminController extends Controller
 
     }
 
-    public function store(StoreProductRequest $request)
+    public function store(StoreProductRequest $request): RedirectResponse
     {
         $data = $request->validated();
 
@@ -51,7 +48,6 @@ class ProductAdminController extends Controller
             'src' => $data['image'],
             'alt' => 'product image',
             'name' => 'test',
-
         ]);
 
         return back();
